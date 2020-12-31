@@ -1,3 +1,5 @@
+
+
 # SMA Backup Service
 
 SMA Backup Service is a worker service which is installed in windows services or linux Systemd to automate backups. SMA Backup Service is able to create backup and upload to online backup storages.
@@ -5,6 +7,83 @@ SMA Backup Service is a worker service which is installed in windows services or
 ## Important
 #### SMA Backup Service is currently under development and only supports SQL Server and MongoDb databases as backup source and FileSystem and Google drive as backup destination.
 
+## SMABackup
+### SMABackup.Service uses [SMABackup](https://github.com/saeedmaghdam/SMABackup) library in order to process backup config file, create backup and upload to desired destination.
+### https://github.com/saeedmaghdam/SMABackup 
+
+## Sample schedulesettings.json
+```json
+{
+	"Daily": [
+		{
+			"Hour": "00",
+			"Minute": "21"
+		}
+	]
+}
+```
+
+## Sample backupsettings.json
+```json
+{
+	"Source": [
+		{
+			"Type": "SqlServer",
+			"Name": "ProjectA_SqlServer",
+			"ServerName": ".",
+			"Username": "sa",
+			"Password": "123456",
+			"DatabaseName": "projecta_db"
+		},
+		{
+			"Type": "MongoDb",
+			"Name": "ProjectB_MongoDb",
+			"CollectionName": "projectb",
+			"HostName": "localhost",
+			"Username": "projectb",
+			"Password": "123456"
+		},
+		{
+			"Type": "MongoDb",
+			"Name": "ProjectC_MongoDb",
+			"CollectionName": "projectc",
+			"HostName": "localhost"
+		}
+	],
+		"Destination": [
+		{
+			"Type": "GoogleDrive",
+			"Name": "MyAccount@gmail.com_GoogleDrive",
+			"ClientId": "00000000000-00000000000000000000000000000000.apps.googleusercontent.com",
+			"ClientSecret": "0000000000000000000000",
+			"ApplicationName": "AppNameInGoogleDrive"
+		}
+	],
+	"Backup": [
+		{
+			"Source": "ProjectA_SqlServer",
+			"Destination": "MyAccount@gmail.com_GoogleDrive",
+			"PostBackup": {
+				"DeleteBackup": "True"
+			}
+		},
+		{
+			"Source": "ProjectB_MongoDb",
+			"Destination": "MyAccount@gmail.com_GoogleDrive",
+			"PostBackup": {
+				"DeleteBackup": "True"
+			}
+		},
+		{
+			"Source": "ProjectC_MongoDb",
+			"Destination": "MyAccount@gmail.com_GoogleDrive",
+			"PostBackup": {
+				"DeleteBackup": "True"
+			}
+		}
+	]
+}
+```
 
 ## Features
 * ### Backup source including: SQL Server, MongoDb
