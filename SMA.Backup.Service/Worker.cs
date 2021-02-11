@@ -5,7 +5,6 @@ using SMA.Backup.Framework;
 using SMA.Backup.Service.Model;
 using SMA.Backup.Util;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
