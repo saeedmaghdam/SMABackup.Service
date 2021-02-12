@@ -100,9 +100,9 @@ namespace SMA.Backup.Service
                 sleepTime -= (int)stopWatch.ElapsedMilliseconds;
             }
 
-            await Task.Delay(sleepTime, stoppingToken);
-
             _logger.LogInformation("Worker finished at: {time}", DateTimeOffset.Now);
+
+            await Task.Delay(sleepTime, stoppingToken);
         }
     }
 }
